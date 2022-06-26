@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react"
 
-import Card from "../UI/Card"
-import Button from "../UI/Button"
-import ErrorModal from "../UI/ErrorModal"
+import Card from "../UI/Card/Card"
+import Button from "../UI/Button/Button"
+import ErrorModal from "../UI/ErrorModal/ErrorModal"
 import classes from './AddUser.module.css'
 
 const AddUser = (props) =>{

@@ -1,4 +1,4 @@
-import Card from "../UI/Card"
+import Card from "../UI/Card/Card"
 import classes from './UserList.module.css'
 
 const UsersList = props =>{
