@@ -34,6 +34,8 @@ const AddUser = (props) =>{
       return
     }
     props.onAddUser(username, age)
+    userAgeRef.current.value = ''
+    userNameRef.current.value = ''
     // setUserData({username:'', age: ''})
   }
 
