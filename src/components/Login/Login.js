@@ -53,8 +53,6 @@ const Login = (props) => {
     isPasswordValid: ''
   })
 
-  const {isEmailValid, isPasswordValid} = userData
-
   useEffect(() =>{
     const identifier = setTimeout(()=>{
       // setFormIsValid(
@@ -68,7 +66,7 @@ const Login = (props) => {
       clearTimeout(identifier)
     }
 
-  }, [isEmailValid, isPasswordValid])
+  }, [userData.isEmailValid, userData.isPasswordValid])
 
   const emailChangeHandler = (event) => {
     // dispathEmail({type:"USER_INPUT", value: event.target.value})
