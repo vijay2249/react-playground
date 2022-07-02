@@ -1,18 +1,8 @@
-import React, { useState, useEffect, useReducer } from 'react';
-
+import React, { useEffect, useReducer, useContext } from 'react';
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
-
-// const emailReducer = (prevState, action) => {
-//   if(action.type==="USER_INPUT"){
-//     return {value: action.value, isValid:action.value.includes('@')}
-//   }
-//   if(action.type === "INPUT_BLUR"){
-//     return {value: prevState.value, isValid:prevState.value.includes('a')}
-//   }
-//   return {value:'', isValid:false}
-// }
+import AuthContext from '../../state/auth-context';
 
 const dataReducer = (prevState, action) =>{
   if(action.type === 'USER_EMAIL'){
@@ -28,23 +18,9 @@ const dataReducer = (prevState, action) =>{
   }
 }
 
-const Login = (props) => {
-  // const [enteredEmail, setEnteredEmail] = useState('');
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [enteredPassword, setEnteredPassword] = useState('');
-  // const [passwordIsValid, setPasswordIsValid] = useState();
-  // const [formIsValid, setFormIsValid] = useState(false);
+const Login = () => {
 
-  // const [loginData, setLoginData] = useState({
-  //   email: '',
-  //   password: ''
-  // })
-  // const handleChange = e =>{
-  //   const {id, value} = e.target
-  //   setLoginData({...loginData, [id]:value})
-  // }
-
-  // const [emailState, dispathEmail] = useReducer(emailReducer, {value:'', isValid:null})
+  const context = useContext(AuthContext)
   
   const [userData, dispatchUserData] = useReducer(dataReducer, {
     userEmail: '',
@@ -55,9 +31,6 @@ const Login = (props) => {
 
   useEffect(() =>{
     const identifier = setTimeout(()=>{
-      // setFormIsValid(
-      //   emailState.isValid && enteredPassword.trim().length > 6
-      // );
       console.log("executed");
       dispatchUserData({type: 'FORM_VALIDATION'})
     }, 1000)
@@ -69,28 +42,24 @@ const Login = (props) => {
   }, [userData.isEmailValid, userData.isPasswordValid])
 
   const emailChangeHandler = (event) => {
-    // dispathEmail({type:"USER_INPUT", value: event.target.value})
     dispatchUserData({type: "USER_EMAIL", value: event.target.value})
   };
 
   const passwordChangeHandler = (event) => {
-    // setEnteredPassword(event.target.value);
     dispatchUserData({type:"USER_PASSWORD", value: event.target.value})
   };
 
   const validateEmailHandler = () => {
-    // dispathEmail({type:'INPUT_BLUR'})
     dispatchUserData({type: 'USER_EMAIL_VALIDATE'})
   };
 
   const validatePasswordHandler = () => {
-    // setPasswordIsValid(enteredPassword.trim().length > 6);
     dispatchUserData({type: 'USER_PASSWORD_VALIDATE'})
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(userData.userEmail, userData.userPassword);
+    context.onLogin(userData.userEmail, userData.userPassword);
   };
 
   return (
