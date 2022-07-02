@@ -53,18 +53,22 @@ const Login = (props) => {
     isPasswordValid: ''
   })
 
+  const {isEmailValid, isPasswordValid} = userData
+
   useEffect(() =>{
     const identifier = setTimeout(()=>{
       // setFormIsValid(
       //   emailState.isValid && enteredPassword.trim().length > 6
       // );
+      console.log("executed");
       dispatchUserData({type: 'FORM_VALIDATION'})
     }, 1000)
     return () =>{
+      console.log("cleanup");
       clearTimeout(identifier)
     }
 
-  }, [userData.isEmailValid, userData.isPasswordValid])
+  }, [isEmailValid, isPasswordValid])
 
   const emailChangeHandler = (event) => {
     // dispathEmail({type:"USER_INPUT", value: event.target.value})
