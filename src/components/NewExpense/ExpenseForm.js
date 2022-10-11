@@ -11,18 +11,16 @@ const ExpenseForm = (props) => {
 
   const changeHandler = (e) =>{
     const {name, value} = e.target
-    // setFormData({...formData, [name]: value})
     setFormData((prevState)=>{
       return {...prevState, [name]:value}
     })
-    // setFormData((prevState)=> ({...prevState, [name]:value}))
   }
 
   const handleSubmit = (event) =>{
     event.preventDefault();
     const userData = {
       title: formData.title,
-      amount: formData.amount,
+      amount: +formData.amount,
       date: new Date(formData.date)
     }
     props.onSave(userData)
@@ -31,6 +29,10 @@ const ExpenseForm = (props) => {
       amount: '',
       date: ''
     })
+  }
+
+  const handleCancel = ()=>{
+    props.onCancel();
   }
 
   return (
@@ -50,6 +52,7 @@ const ExpenseForm = (props) => {
         </div>
       </div>
       <div className='new-expense__actions'>
+        <button type='button' onClick={handleCancel}>Cancel</button>
         <button type='submit'>Add Expense</button>
       </div>
     </form>
