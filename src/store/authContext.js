@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react"
 const AuthContext = React.createContext({
   isLoggedIn: false,
   onLogout: ()=>{},
-  onLogIn: ()=>{}
+  onLogIn: (email, password)=>{}
 })
 
 export const AuthContextProvider = (props) =>{
@@ -32,7 +32,11 @@ export const AuthContextProvider = (props) =>{
     onLogout: logoutHandler
   }
   
-  return <AuthContext.Provider value={values}>{props.children}</AuthContext.Provider>
+  return( 
+    <AuthContext.Provider value={values}>
+      {props.children}
+    </AuthContext.Provider>
+  )
 }
 
 export default AuthContext
