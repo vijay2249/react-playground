@@ -3,9 +3,8 @@ import './ChartBar.css'
 const ChartBar = (props) =>{
 
   let barHeight = '0%'
-
-  if(props.maxValue > 0){
-    barHeight = Math.round((props.value/props.maxValue)*100) + "%"
+  if(props.totalExpense > 0){
+    barHeight = Math.round((props.value/props.totalExpense)*100)+"%"
   }
 
   return (

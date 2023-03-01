@@ -4,15 +4,15 @@ import './Chart.css'
 
 const Chart = (props) =>{
   const values = props.dataPoints.map(dataPoint => dataPoint.value)
-  const maxVal = Math.max(...values)
+  const totalExpense = values.reduce((val, acc) => val + acc, 0)
 
   return (
     <div className='chart'>
       {props.dataPoints.map(dataPoint=>(
         <ChartBar 
+          totalExpense = {totalExpense}
           key={dataPoint.key}
-          value={dataPoint.value} 
-          maxValue={maxVal} 
+          value={dataPoint.value}
           label={dataPoint.label}
         />
       ))}
