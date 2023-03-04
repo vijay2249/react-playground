@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -17,14 +17,25 @@ const Login = (props) => {
     password: ''
   })
 
+  useEffect(()=>{
+    const identifier = setTimeout(()=>{
+      setFormIsValid(
+        userDetails.email.includes('@') && userDetails.password.trim().length > 6
+      );
+    }, 500)
+    return ()=>{
+      clearTimeout(identifier)
+    }
+  }, [userDetails])
+
   const handleInputChange = event =>{
     const {type, value} = event.target
     setUserDetails((prevState) =>{
       const currentState = {...prevState, [type]:value}
 
-      setFormIsValid(
-        currentState.email.includes('@') && currentState.password.trim().length > 6
-      );
+      // setFormIsValid(
+      //   currentState.email.includes('@') && currentState.password.trim().length > 6
+      // );
 
       return currentState
     })
