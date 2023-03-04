@@ -1,6 +1,8 @@
-import { useState } from "react";
 import Expense from "./components/Expenses/Expense";
 import NewExpense from "./components/NewExpense/NewExpense";
+import AddUser from './components/Users/AddUser';
+import UsersList from './components/Users/UsersList';
+import React, { useState } from 'react';
 
 const INITAL_EXPENSES = [
   {
@@ -33,14 +35,26 @@ function App() {
   const addExpenseHandler = (newData) =>{
     setExpenses((prevState) =>{
       return [newData, ...prevState]
+    }
+  )}
+
+
+  const [users, setUsers] = useState([])
+  const handleAddUser = user =>{
+    setUsers((prevState) =>{
+      return [...prevState, user]
     })
   }
 
   return (
-    <div className="App">
-      <NewExpense onAddExpense={addExpenseHandler}/>
-      <Expense items={expenses}/>
-    </div>
+    <React.Fragment>
+      <div className="App">
+        <NewExpense onAddExpense={addExpenseHandler}/>
+        <Expense items={expenses}/>
+      </div>
+      <AddUser onAddUser={handleAddUser}/>
+      <UsersList users={users}/>
+    </React.Fragment>
   );
 }
 
