@@ -9,35 +9,54 @@ const Login = (props) => {
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
+
   const [formIsValid, setFormIsValid] = useState(false);
 
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
+  const [userDetails, setUserDetails] = useState({
+    email: '',
+    password: ''
+  })
 
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
-  };
+  const handleInputChange = event =>{
+    const {type, value} = event.target
+    setUserDetails((prevState) =>{
+      const currentState = {...prevState, [type]:value}
 
-  const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
+      setFormIsValid(
+        currentState.email.includes('@') && currentState.password.trim().length > 6
+      );
 
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
-  };
+      return currentState
+    })
+  }
+
+  // const emailChangeHandler = (event) => {
+  //   setEnteredEmail(event.target.value);
+
+  //   setFormIsValid(
+  //     event.target.value.includes('@') && enteredPassword.trim().length > 6
+  //   );
+  // };
+
+  // const passwordChangeHandler = (event) => {
+  //   setEnteredPassword(event.target.value);
+
+  //   setFormIsValid(
+  //     event.target.value.trim().length > 6 && enteredEmail.includes('@')
+  //   );
+  // };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    setEmailIsValid(userDetails.email.includes('@'));
   };
 
   const validatePasswordHandler = () => {
-    setPasswordIsValid(enteredPassword.trim().length > 6);
+    setPasswordIsValid(userDetails.password.trim().length > 6);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(enteredEmail, enteredPassword);
+    props.onLogin(userDetails.email, userDetails.password);
   };
 
   return (
@@ -52,8 +71,8 @@ const Login = (props) => {
           <input
             type="email"
             id="email"
-            value={enteredEmail}
-            onChange={emailChangeHandler}
+            value={userDetails.email}
+            onChange={handleInputChange}
             onBlur={validateEmailHandler}
           />
         </div>
@@ -66,8 +85,8 @@ const Login = (props) => {
           <input
             type="password"
             id="password"
-            value={enteredPassword}
-            onChange={passwordChangeHandler}
+            value={userDetails.password}
+            onChange={handleInputChange}
             onBlur={validatePasswordHandler}
           />
         </div>
