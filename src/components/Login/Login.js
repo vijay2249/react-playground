@@ -1,23 +1,12 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import AuthContext from '../../store/auth-context';
 
-// const emailReducer = (state, action) =>{
-//   if(action.type === 'USER_INPUT') return {value: action.val, isValid: action.val.includes('@')}
-//   return {value: "", isValid: false}
-// }
-
-// const passwordReducer = (state, action) =>{
-//   if(action.type === 'USER_INPUT') return {value: action.val, isValid: action.val.trim().length > 6}
-//   return {value: "", isValid: false}
-// }
 
 const loginReducer = (state, action) =>{
-  // console.log("inside login reducer function");
-  // console.log("State =>", state);
-  // console.log("Action => ", action);
   if(action.type === "EMAIL_INPUT"){
     return {...state, email: action.value}
   }else if(action.type === "PASSWORD_INPUT"){
@@ -32,12 +21,6 @@ const loginReducer = (state, action) =>{
 }
 
 const Login = (props) => {
-
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [passwordIsValid, setPasswordIsValid] = useState();
-
-  // const [emailState, dispatchEmail] = useReducer(emailReducer, {value:'', isValid: false})
-  // const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: false})
   
   const [userInput, dispatchUserInput] = useReducer(loginReducer, {
     email:"",
@@ -47,20 +30,11 @@ const Login = (props) => {
   })
   // initial values are null, thats to distract at initial load of red border around input even before any input from user
 
-  // const [formIsValid, setFormIsValid] = useState(false);
-
-  // const [userDetails, setUserDetails] = useState({
-  //   email: '',
-  //   password: ''
-  // })
+  const {onLogin} = useContext(AuthContext)
 
   useEffect(()=>{
     const identifier = setTimeout(()=>{
-      // setFormIsValid(
-      //   userDetails.email.includes('@') && userDetails.password.trim().length > 6
-      // );
       dispatchUserInput({type: "FORM_VALIDATION"})
-      // setFormIsValid( userInput.isEmailValid && userInput.isPasswordValid );
     }, 500)
     return ()=>{
       clearTimeout(identifier)
@@ -69,34 +43,23 @@ const Login = (props) => {
 
   const handleInputChange = event =>{
     const {type, value} = event.target
-    
-    // setUserDetails((prevState) =>{
-    //   return {...prevState, [type]:value};
-    // })
-    // console.log({
-    //   type: `${type.toUpperCase()}_INPUT`,
-    //   value: value
-    // })
     dispatchUserInput({
       type: `${type.toUpperCase()}_INPUT`,
       value: value
     })
-
   }
 
   const validateEmailHandler = () => {
     dispatchUserInput({ type: "EMAIL_VALIDATE" })
-    // setEmailIsValid(userInput.isEmailValid);
   };
 
   const validatePasswordHandler = () => {
     dispatchUserInput({ type: "PASSWORD_VALIDATE" })
-    // setPasswordIsValid(userInput.isPasswordValid);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(userInput.email, userInput.password);
+    onLogin(userInput.email, userInput.password);
   };
 
   return (
