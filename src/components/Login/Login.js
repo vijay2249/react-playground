@@ -4,6 +4,7 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 import AuthContext from '../../store/auth-context';
+import Input from './Input';
 
 
 const loginReducer = (state, action) =>{
@@ -65,34 +66,26 @@ const Login = (props) => {
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            userInput.isEmailValid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
-          <input
-            type="email"
-            id="email"
-            value={userInput.email}
-            onChange={handleInputChange}
-            onBlur={validateEmailHandler}
-          />
-        </div>
-        <div
-          className={`${classes.control} ${
-            userInput.isPasswordValid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={userInput.password}
-            onChange={handleInputChange}
-            onBlur={validatePasswordHandler}
-          />
-        </div>
+        <Input 
+          isValid={userInput.isEmailValid === false ? classes.invalid : ''}
+          htmlFor='email'
+          label='E-Mail'
+          id='email'
+          type='email'
+          value={userInput.email}
+          onChange={handleInputChange}
+          onBlur={validateEmailHandler}
+        />
+        <Input 
+          isValid={userInput.isPasswordValid === false ? classes.invalid : ''}
+          htmlFor='password'
+          label='Password'
+          id='password'
+          type='password'
+          value={userInput.password}
+          onChange={handleInputChange}
+          onBlur={validatePasswordHandler}
+        />
         <div className={classes.actions}>
           <Button type="submit" className={classes.btn} disabled={!(userInput.isEmailValid && userInput.isPasswordValid)}>
             Login
