@@ -1,28 +1,20 @@
-import { useState } from 'react';
-import './App.css';
-import Cart from './components/Cart/Cart';
-import Header from './components/Layout/Header';
-import Meals from './components/Meals/Meals';
-import CartProvider from './store/CartProvider';
+import { Fragment } from 'react';
+import Counter from './components/Counter';
+import Header from './components/Header'
+import Auth from './components/Auth'
+import UserProfile from './components/UserProfile'
+import { useSelector } from 'react-redux';
+
 
 function App() {
-
-  const [cartIsShown, setCartIsShown] = useState(false)
-
-  const showCart = () =>{
-    setCartIsShown(true)
-  }
-
-  const hideCart = () => setCartIsShown(false)
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 
   return (
-    <CartProvider>
-      { cartIsShown && <Cart onClose={hideCart}/> }
-      <Header onShowCart={showCart}/>
-      <main>
-        <Meals/>
-      </main>
-    </CartProvider>
+    <Fragment>
+      <Header />
+      {!isAuthenticated ? <Auth /> : <UserProfile /> }
+      <Counter />
+    </Fragment>
   );
 }
 
